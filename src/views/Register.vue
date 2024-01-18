@@ -48,12 +48,10 @@
               name="password"
               @input="checkPasswordStrength"
             />
-            <progress :value="strength" max="100" :class="progressClass"></progress>
-            
-              <div :class="progressClass">{{ strengthText }}</div>
-              <div :class="progressClass">
-                <div :class="progressClass" id="progressBar" :style="{ width: strength + '%' }"></div>
-              </div>
+            <progress :value="strength" max="100" :class="progressClass"></progress>            
+            <div :class="progressClass">{{ strengthText }}</div>            
+            <div :class="progressClass" id="progressBar" :style="{ width: strength + '%' }"></div>
+
             <div
               v-if="submitted && errors.has('password')"
               class="alert alert-danger"
@@ -186,7 +184,6 @@ export default {
      }
 
     // return this.strength;
-
     }
   }
 };
@@ -236,12 +233,10 @@ progress {
 
 .moderate {
   color: orange;
-  background-color: orange;
 }
 
 .strong {
   color: green;
-  background-color: green;
 }
 
 .progress {
@@ -254,7 +249,7 @@ progress {
 
 .progress div {
   height: 100%;
-  background-color: #4caf50; /* Default color for the progress bar */
+  background-color: #4caf50; 
 }
 
 </style>

@@ -24,7 +24,12 @@ const router = new VueRouter({
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            beforeEnter: (to, from, next) => {
+                const token = localStorage.getItem("token");
+                if (token) next('/profile');
+                else next();
+            }
         },
         {
             path: '/register',
@@ -74,5 +79,20 @@ const router = new VueRouter({
     ]
 });
 
+
+// The global route guard. auth required for paths not in public pages array
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/login', '/register', '/home'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('token');
+  
+    // trying to access a restricted page + not logged in
+    // redirect to login page
+    if (authRequired && !loggedIn) {
+      next('/login');
+    } else {
+      next();
+    }
+  });
 
 export default router;

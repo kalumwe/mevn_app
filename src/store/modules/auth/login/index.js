@@ -21,16 +21,16 @@ const mutations = {
     },
     LOGIN_SUCCESS (state, user) {
         state.loading = false;
-        state.status.loggedIn = true;
-        state.user = user;
+        state.initialState.status.loggedIn = true;
+        state.initialState.user = user;
     },
     LOGIN_FAILURE(state) {
-        state.status.loggedIn = false;
-        state.user = null;
+        state.initialState.status.loggedIn = false;
+        state.initialState.user = null;
     },
     LOGOUT(state) {
-        state.status.loggedIn = false;
-        state.user = null;
+        state.initialState.status.loggedIn = false;
+        state.initialState.user = null;
     },
 }
 
