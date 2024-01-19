@@ -6,33 +6,34 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
   User.findOne({
     username: req.body.username
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-
+  }).exec()
+  .then((user) => {
     if (user) {
-      res.status(400).send({ message: "Failed! Username is already in use!" });
+      res.status(400).send("Failed! Username is already in use!");
       return;
     }
 
     // Email
     User.findOne({
       email: req.body.email
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-
+    }).exec()
+    .then((user) => {
       if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
+        res.status(400).send("Failed! Email is already in use!");
         return;
       }
 
       next();
+    })
+    .catch( err => {
+      res.status(500).send({ message: err });
+        return;
     });
+
+  })
+  .catch(err => {
+    res.status(500).send({ message: err });
+    return;
   });
 };
 

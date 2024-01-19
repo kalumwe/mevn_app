@@ -8,7 +8,7 @@ Validator.localize('en', {
       confirmed: 'The passwords do not match.'
     },
     password: {
-      regex: 'The passwords do not match. Must contain atleast a capital letter, number and special character'
+      regex: 'Must contain atleast a capital letter, number and special character'
     }
   }
 });

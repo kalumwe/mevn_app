@@ -8,7 +8,8 @@ const state = {
    currentPage: 1,
    totalPages: 1,
    totalItems: 0,
-   loading: false
+   loading: false,
+   user: "admin"
 };
 
 

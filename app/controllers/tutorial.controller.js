@@ -1,7 +1,6 @@
 const db = require("../models");
 
-const Tutorial = db.tutorials;
-
+const Tutorial = db.tutorials; 
 
 const getPagination = (page, size) => {
     const limit = size ? +size : 3;

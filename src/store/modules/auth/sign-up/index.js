@@ -2,19 +2,22 @@ import AuthService from '../../../../services/auth.service';
 
 const state = {
   loading: false,
-  status: { loggedIn: false }
+  status: { loggedIn: false },
+  message: ""
 }
 
 const mutations = {
     SIGNUP_PENDING (state) {
         state.loading = true;
     },
-    SIGNUP_SUCCESS (state) {
+    SIGNUP_SUCCESS (state, payload) {
         state.loading = false;
         state.status.loggedIn = false;
+        state.message = payload;
     },
-    SIGNUP_FAILURE (state) {
+    SIGNUP_FAILURE (state, payload) {
         state.status.loggedIn = false;
+        state.message = payload;
     }
 }
 
@@ -23,11 +26,11 @@ const actions = {
         commit('SIGNUP_PENDING');
         return AuthService.register(user)
         .then((response) => {
-            commit('SIGNUP_SUCCESS');
+            commit('SIGNUP_SUCCESS', response.data.message);
             return Promise.resolve(response.data);
         },
         error => {
-            commit('SIGNUP_FAILURE');
+            commit('SIGNUP_FAILURE', (error.response && error.response.data));
             return Promise.reject(error);
           }
         );
@@ -35,8 +38,9 @@ const actions = {
 }
 
 const getters = {
-  loading: state => state.loading,
-  status: state => state.loading.loggedIn
+  getLoading: state => state.loading,
+  getStatus: state => state.status.loggedIn,
+  getMessage: state => state.message
 }
 
 const signUpModule = {

@@ -42,7 +42,7 @@
             <label for="password">Password</label>
             <input
               v-model="user.password"
-              v-validate="'required|min:6|max:40|regex:[A-Z]+.*[0-9]+.*[^A-Za-z0-9]'"
+              v-validate="'required|min:6|max:40'"
               type="password"
               class="form-control"
               name="password"
@@ -62,7 +62,7 @@
             <label for="confirmPassword">Password</label>
             <input
               v-model="confirmPassword"
-              v-validate="'required|confirmed:password'"
+              v-validate="'required|'"
               type="password"
               class="form-control"
               name="confirmPassword"
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import User from '../models/user';
 
 export default {
@@ -108,7 +109,8 @@ export default {
   computed: {
 
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      //return this.$store.state.auth.status.loggedIn;
+      return this.getStatus;
     },
 
     progressClass() {
@@ -131,7 +133,12 @@ export default {
       } else  {
         return 'Strong';
       }
-    }
+    },
+
+    ...mapGetters([
+        'getMessage',
+        'getStatus'
+      ]),
   },
   mounted() {
     if (this.loggedIn) {
@@ -144,15 +151,17 @@ export default {
       this.submitted = true;
       this.$validator.validate().then(isValid => {
         if (isValid) {
-          this.$store.dispatch('signup/register', this.user).then(
-            data => {
-              this.message = data.message;
+          this.$store.dispatch('register', this.user)
+          .then(
+            () => {
+              this.message = this.getMessage;
               this.successful = true;
+             // this.$router.push('/login');
             },
             error => {
               this.message =
                 (error.response && error.response.data) ||
-                error.message ||
+                this.getMessage ||
                 error.toString();
               this.successful = false;
             }
