@@ -25,12 +25,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Profile-view',
   computed: {
     currentUser() {
-      return this.$store.state.login.user;
-    }
+      return this.getUser;
+    },
+    ...mapGetters([
+        'getUser'
+      ]),
   },
   mounted() {
     if (!this.currentUser) {

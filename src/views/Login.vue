@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import User from '../models/user';
 
 export default {
@@ -61,12 +62,16 @@ export default {
       user: new User('', ''),
       loading: false,
       message: ''
-    };
+    }; 
   },
   computed: {
     loggedIn() {
-      return this.$store.state.login.status.loggedIn;
-    }
+      return this.getStatusloggedIn;
+    },
+    ...mapGetters([
+        'getStatusloggedIn',
+        'getStatusMessage'
+      ]),
   },
   created() {
     if (this.loggedIn) {
@@ -83,16 +88,16 @@ export default {
         }
 
         if (this.user.username && this.user.password) {
-          this.$store.dispatch('login/login', this.user)
+          this.$store.dispatch('login', this.user)
           .then(
             () => {
               this.$router.push('/profile');
-            },
+            }).catch(
             error => {
               this.loading = false;
               this.message =
                 (error.response && error.response.data) ||
-                error.message ||
+                this.getStatusMessage ||
                 error.toString();
             }
           );

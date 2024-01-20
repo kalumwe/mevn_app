@@ -160,7 +160,7 @@ export default {
             },
             error => {
               this.message =
-                (error.response && error.response.data) ||
+                
                 this.getMessage ||
                 error.toString();
               this.successful = false;

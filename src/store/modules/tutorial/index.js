@@ -64,7 +64,7 @@ const actions = {
       });
    },
    addTutorialItem ({ commit }, payload) {
-      return http.post('/tutorials', { payload, headers: authHeader() }).then((response) => {
+      return http.post('/tutorials', payload, { headers: authHeader() }).then((response) => {
          commit('UPDATE_TUTORIAL_ITEMS', response.data)
          console.log(response.data);
       })
@@ -73,7 +73,7 @@ const actions = {
       });
    },
    updateTutorialItem ({ commit }, payload) {
-       return http.put(`/tutorials/${payload.id}`, { payload, headers: authHeader() })
+       return http.put(`/tutorials/${payload.id}`, payload, { headers: authHeader() })
        .then((response) => {
          commit('UPDATE_TUTORIAL_ITEM', response.data);
          console.log(response.data);

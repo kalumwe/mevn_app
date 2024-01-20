@@ -3,6 +3,7 @@ const ROLES = db.ROLES;
 const User = db.user;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
+
   // Username
   User.findOne({
     username: req.body.username
@@ -37,6 +38,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   });
 };
 
+//check if roles exist in roles array
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {

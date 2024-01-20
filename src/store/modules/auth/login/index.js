@@ -9,8 +9,9 @@ const initialState = user
 const state = {
   token: null,
   loading: false,
-  initialState
-}
+  initialState,
+  message: ""
+} 
 
 const mutations = {
     SET_TOKEN (state, token) { 
@@ -27,6 +28,10 @@ const mutations = {
     LOGIN_FAILURE(state) {
         state.initialState.status.loggedIn = false;
         state.initialState.user = null;
+        
+    },
+    RESP_MESSAGE(state, message) {
+        state.message = message;
     },
     LOGOUT(state) {
         state.initialState.status.loggedIn = false;
@@ -41,11 +46,13 @@ const actions = {
         .then((user) => {
                 commit('SET_TOKEN', user.accessToken);
                 commit('LOGIN_SUCCESS', user);
+                commit('RESP_MESSAGE', user);
 
                 return Promise.resolve(user);
-        },
-        error => {
+        })
+        .catch(error => {
             commit('LOGIN_FAILURE');
+            commit('RESP_MESSAGE', (error.user && error.message));
             return Promise.reject(error);
         });
     },
@@ -57,10 +64,11 @@ const actions = {
 }
 
 const getters = {
-  token: state => state.token,
-  loading: state => state.loading,
-  status: state => state.initialState.status.loggedIn,
-  user: state => state.initialState.user,
+  getToken: state => state.token,
+  getLoadinglogIn: state => state.loading,
+  getStatusloggedIn: state => state.initialState.status.loggedIn,
+  getUser: state => state.initialState.user,
+  getStatusMessage: state => state.message
 }
 
 const loginModule = {
@@ -70,5 +78,5 @@ const loginModule = {
    getters
 }
 
-
+ 
 export default loginModule;

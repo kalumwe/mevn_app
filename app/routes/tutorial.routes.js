@@ -9,8 +9,7 @@ const tutorials = require("../controllers/tutorial.controller.js");
         "x-access-token, Origin, Content-Type, Accept"
       );
       next();
-    });
-  
+    }); 
 
   var router = require("express").Router();
 
@@ -27,7 +26,7 @@ const tutorials = require("../controllers/tutorial.controller.js");
   router.get("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorials.findOne);
 
   // Update a Tutorial with id
-  router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorials.update);
+  router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorials.update); 
 
   // Delete a Tutorial with id
   router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], tutorials.delete);

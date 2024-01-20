@@ -28,8 +28,8 @@ const actions = {
         .then((response) => {
             commit('SIGNUP_SUCCESS', response.data.message);
             return Promise.resolve(response.data);
-        },
-        error => {
+        })
+        .catch( error => {
             commit('SIGNUP_FAILURE', (error.response && error.response.data));
             return Promise.reject(error);
           }

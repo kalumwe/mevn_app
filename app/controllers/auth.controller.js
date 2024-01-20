@@ -59,15 +59,14 @@ exports.signup = (req, res) => {
     return;
   });
 };
-
+ 
 exports.signin = (req, res) => {
   User.findOne({
     username: req.body.username
-  })
-    .populate("roles", "-__v")  /*replace the specified roles field in the found user document with the actual role documents*/
-    /*.exec().then((user) => {
+  }).populate("roles", "-__v")  /*replace the specified roles field in the found user document with the actual role documents*/
+    .exec().then((user) => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send("User Not found.");
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -76,10 +75,9 @@ exports.signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!"
-        });
+        return res.status(401).send(
+          "Invalid Password!"
+        );
       }
 
       const token = jwt.sign({ id: user.id },
@@ -100,15 +98,16 @@ exports.signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
-        accessToken: token
+        accessToken: token,
+        message:  user.username + ' logged in'
       });
     })
     .catch(err => {
         res.status(500).send({ message: err });
         return;
     });
-    */
-    .exec().then((err, user) => {
+    
+    /*.exec().then((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
@@ -150,5 +149,5 @@ exports.signin = (req, res) => {
         roles: authorities,
         accessToken: token
       });
-    });
+    });*/
 };

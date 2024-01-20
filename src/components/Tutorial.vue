@@ -119,7 +119,7 @@ export default {
       this.$store.dispatch('removeTutorialItem', this.tutorialItem.id)
       //TutorialDataService.delete(this.currentTutorial.id)
         .then(() => {
-          this.$router.push({ name: "tutorials" });
+          this.$router.push({ name: "tutorials-list" });
         })
         .catch(e => {
           console.log(e);

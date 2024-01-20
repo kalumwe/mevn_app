@@ -71,7 +71,7 @@ export default {
       this.$store.dispatch('getTutorialItems', params);
     },
     logOut() {
-      this.$store.dispatch('login/logout');
+      this.$store.dispatch('logout');
       this.$router.push('/login');
     }
   },
@@ -79,11 +79,11 @@ export default {
       ...mapGetters([
         'tutorialItems',
         'getCurrentPage',
-        'user'
+        'getUser'
       ]),
       currentUser() {
         //return this.$store.state.login.user;
-        return this.user;
+        return this.getUser;
       },
       showAdminBoard() {
         if (this.currentUser && this.currentUser.roles) {
